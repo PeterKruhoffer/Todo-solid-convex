@@ -4,10 +4,8 @@ import { api } from "../convex/_generated/api";
 
 const App: Component = () => {
   const [count, setCount] = createSignal(0);
-  const convexCount = createQuery<number>(api.counter.get);
-  const incrementGlobalCount = createMutation<{ increment: number }, void>(
-    api.counter.increment,
-  );
+  const convexCount = createQuery(api.counter.get);
+  const incrementGlobalCount = createMutation(api.counter.increment);
 
   return (
     <div class="flex flex-col gap-4 justify-center">

@@ -2,24 +2,13 @@ import { createSignal, For, Show } from "solid-js";
 import { api } from "../convex/_generated/api";
 import { createMutation, createQuery } from "./cvxsolid";
 
-type Task = {
-  _id?: string;
-  title: string;
-  description?: string;
-  isCompleted: boolean;
-};
-
 export function Tasks() {
   const [title, setTitle] = createSignal("");
   const [description, setDescription] = createSignal("");
-  const paginatedTasks = createQuery<{
-    page: Task[];
-    isDone: boolean;
-    continueCursor: string;
-  }>(api.tasks.get);
+  const paginatedTasks = createQuery(api.tasks.get);
 
-  const createTask = createMutation<Task, void>(api.tasks.create);
-  const removeTask = createMutation<{ id: string }, void>(api.tasks.remove);
+  const createTask = createMutation(api.tasks.create);
+  const removeTask = createMutation(api.tasks.remove);
 
   return (
     <main class="grid place-items-center min-h-screen flex-1 w-full p-10">
