@@ -1,4 +1,4 @@
-import { createSignal, For, Show } from "solid-js";
+import { createSignal, For, Match, Switch } from "solid-js";
 import { api } from "../convex/_generated/api";
 import { createMutation, createQuery } from "./cvxsolid";
 import { Id } from "../convex/_generated/dataModel";
@@ -13,13 +13,18 @@ export function Tasks() {
         <AddTaskForm />
       </div>
 
-      <Show when={paginatedTasks()}>
-        {(pt) => (
-          <div class="grid grid-cols-4 gap-8 w-full">
-            <For each={pt().page}>{(task) => <TaskCard task={task} />}</For>
-          </div>
-        )}
-      </Show>
+      <Switch>
+        <Match when={paginatedTasks() === undefined}>
+          <span class="text-2xl">Loading tasks</span>
+        </Match>
+        <Match when={paginatedTasks()}>
+          {(pt) => (
+            <div class="grid grid-cols-4 gap-8 w-full">
+              <For each={pt().page}>{(task) => <TaskCard task={task} />}</For>
+            </div>
+          )}
+        </Match>
+      </Switch>
     </main>
   );
 }
